@@ -1,0 +1,280 @@
+:root{
+  --bg:#071127;
+  --card:#071722;
+  --text:#e6f0f6;
+  --muted:#9aa7b2;
+  --neon:#6ee7ff;
+  --accent:#7bf59f;
+  --gap:22px;
+}
+
+/* Reset & base */
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  background: linear-gradient(180deg,#071127 0%,#081521 100%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* ========================== HEADER ========================== */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 32px;
+  background: rgba(0,0,0,0.18);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  position:sticky;
+  top:0;
+  z-index:30;
+}
+.brand{
+  font-weight:800;
+  font-size:20px;
+  color: var(--neon);
+  text-shadow:0 0 10px rgba(110,231,255,0.28);
+}
+.brand span{ font-weight:500; color:var(--muted); font-size:13px; margin-left:6px; }
+
+.nav a{
+  color:var(--muted);
+  margin-left:14px;
+  text-decoration:none;
+  font-size:15px;
+  transition:color .25s, border-bottom .25s;
+  padding-bottom:6px;
+}
+.nav a:hover{ color:var(--neon); }
+.nav a.active{
+  color:var(--neon);
+  font-weight:600;
+  border-bottom:2px solid var(--neon);
+}
+
+/* ========================== MAIN LAYOUT ========================== */
+.viz-container{
+  max-width:1200px;
+  margin: 30px auto;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  gap:45px;
+}
+
+/* ========================== CHART ROWS ========================== */
+
+/* FIRST ROW — BIG SINGLE CHART */
+.chart-row.full-width{
+  width:100%;
+}
+.chart-large{
+  width:100%;
+  padding:24px;
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
+  border:1px solid rgba(56, 221, 221, 0.42);
+  box-shadow:0 6px 28px rgba(0,255,255,0.06);
+}
+.chart-large canvas{
+  width:100% !important;
+  height:340px !important;   /* slightly reduced height for your request */
+}
+
+/* SECOND ROW — TWO SIDE BY SIDE */
+.chart-row.two-charts{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:36px;
+}
+.chart-small{
+  padding:22px;
+  border-radius:16px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border:1px solid rgba(0,255,255,0.12);
+  box-shadow:0 6px 20px rgba(0,255,255,0.06);
+}
+.chart-small canvas{
+  width:100% !important;
+  height:300px !important;  /* slightly smaller */
+}
+
+/* TITLES */
+.card-title{
+  font-size:20px;
+  margin:0 0 14px 0;
+  font-weight:700;
+  background: linear-gradient(90deg,#00eaff,#7df9ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  letter-spacing:0.2px;
+}
+
+/* ========================== HISTORY TABLE ========================== */
+.card.wide{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding:20px;
+  border-radius:14px;
+  border:1px solid rgba(28, 132, 158, 0.72);
+  box-shadow:0 8px 28px rgba(0,0,0,0.45);
+}
+
+/* header layout inside card */
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:6px;
+}
+
+.card-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.btn{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  padding:8px 12px;
+  border-radius:8px;
+  color:var(--text);
+  cursor:pointer;
+  transition:0.20s;
+  font-size:13px;
+}
+.btn:hover{
+  border-color: var(--neon);
+  box-shadow:0 0 10px rgba(110,231,255,0.18);
+}
+
+/* table container */
+.table-wrap{
+  margin-top:12px;
+  max-height:340px;
+  overflow:auto;
+  border-radius:8px;
+  padding-right:8px; /* scrollbar room */
+  background:transparent;
+}
+
+/* table basics */
+#historyTable{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;   /* important for column stability */
+  font-size:14px;
+  min-width:720px;
+}
+
+/* header row */
+#historyTable thead th{
+  position:sticky;
+  top:0;
+  z-index:2;
+  background: rgba(10,16,24,0.95);
+  color: var(--muted);
+  padding:14px 16px;
+  text-align:left;
+  font-weight:700;
+  letter-spacing:0.2px;
+}
+
+/* body cells */
+#historyTable tbody td{
+  padding:12px 16px;
+  border-bottom:1px dashed rgba(255,255,255,0.02);
+  vertical-align:middle;
+  color:var(--text);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* column width hints */
+#historyTable thead th:nth-child(1){ width: 4%;  }  /* index */
+#historyTable thead th:nth-child(2){ width: 42%; }  /* filename */
+#historyTable thead th:nth-child(3){ width: 12%; }  /* type */
+#historyTable thead th:nth-child(4){ width: 12%; }  /* label */
+#historyTable thead th:nth-child(5){ width: 12%; }  /* confidence */
+#historyTable thead th:nth-child(6){ width: 18%; }  /* date/time */
+
+/* alignments */
+#historyTable tbody td:nth-child(1),
+#historyTable thead th:nth-child(1) { text-align:center; }
+#historyTable tbody td:nth-child(3),
+#historyTable thead th:nth-child(3) { text-align:center; }
+#historyTable tbody td:nth-child(4),
+#historyTable thead th:nth-child(4) { text-align:center; }
+#historyTable tbody td:nth-child(5),
+#historyTable thead th:nth-child(5) { text-align:right; padding-right:22px; }
+
+/* filename column */
+#historyTable tbody td:nth-child(2) {
+  text-align:left;
+  padding-right:8px;
+}
+
+/* label color classes (neon) */
+.label-fake{ color:#ff4d4d; font-weight:700; text-transform:capitalize; }
+.label-real{ color:#4dff8f; font-weight:700; text-transform:capitalize; }
+.label-error{ color:#ffb86b; font-weight:700; text-transform:capitalize; }
+
+/* pagination and actions */
+.pagination{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:16px;
+}
+.card .pagination{
+  justify-content:flex-start;
+  padding-left:6px;
+}
+
+/* ========================== FOOTER ========================== */
+.footer{
+  width:100%;
+  text-align:center;
+  padding:22px 10px;
+  margin-top:30px;
+  color:var(--muted);
+  font-size:14px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* ========================== SMALL SCREEN TWEAKS ========================== */
+@media (max-width:900px){
+  .chart-row.two-charts{
+    grid-template-columns:1fr;
+  }
+  #historyTable { font-size:13px; min-width:560px; }
+  .table-wrap { max-height:260px; }
+  .viz-container { padding:16px; gap:28px; }
+}
+
+/* ========================== UTILITY (optional extras) ========================== */
+
+/* subtle card hover lift for charts */
+.chart-small, .chart-large {
+  transition: transform .25s, box-shadow .25s;
+}
+.chart-small:hover, .chart-large:hover{
+  transform: translateY(-6px);
+  box-shadow:0 18px 40px rgba(0,0,0,0.45);
+}
+
+/* small helper to visually emphasize numbers (not required) */
+.stat-number{
+  font-size:20px;
+  font-weight:700;
+  color:var(--neon);
+}
+
+/* End of file */

@@ -1,0 +1,116 @@
+from flask import Flask, render_template, request, redirect, url_for
+import torch
+from torchvision import transforms, models
+from werkzeug.utils import secure_filename
+import os
+import cv2
+import numpy as np
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'backend/static/uploads'
+
+# Ensure uploads folder exists
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+# ----------------------------
+# 🔹 Load Models (Image + Video)
+# ----------------------------
+device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+
+# Image model
+image_model = models.resnet18(pretrained=False)
+image_model.fc = torch.nn.Linear(image_model.fc.in_features, 2)
+image_model.load_state_dict(torch.load("models/image/image_model.pth", map_location=device))
+image_model.to(device).eval()
+
+# Video model
+video_model = models.resnet18(pretrained=False)
+video_model.fc = torch.nn.Linear(video_model.fc.in_features, 2)
+video_model.load_state_dict(torch.load("models/deepfake_resnet18.pth", map_location=device))
+video_model.to(device).eval()
+
+# Class mapping
+idx_to_class = {0: 'fake', 1: 'real'}
+
+
+
+
+# Image transform
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor()
+])
+
+# ----------------------------
+# 🔸 Helper functions
+# ----------------------------
+def predict_image(image_path):
+    from PIL import Image
+    img = Image.open(image_path).convert("RGB")
+    tensor = transform(img).unsqueeze(0).to(device)
+    with torch.no_grad():
+        output = image_model(tensor)
+        pred = torch.argmax(output, 1).item()
+    return idx_to_class[pred]
+
+
+def predict_video(video_path, max_frames=30):
+    cap = cv2.VideoCapture(video_path)
+    frames_processed = 0
+    preds = []
+
+    while True:
+        ret, frame = cap.read()
+        if not ret or frames_processed >= max_frames:
+            break
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame = cv2.resize(frame, (224, 224))
+        frame_tensor = torch.tensor(frame).permute(2,0,1).unsqueeze(0).float() / 255.0
+        frame_tensor = frame_tensor.to(device)
+
+        with torch.no_grad():
+            output = video_model(frame_tensor)
+            pred = torch.argmax(output, 1).item()
+            preds.append(pred)
+        frames_processed += 1
+
+    cap.release()
+    if not preds:
+        return "Error: no frames processed"
+    majority_vote = int(np.bincount(preds).argmax())
+    return idx_to_class[majority_vote]
+
+# ----------------------------
+# 🔹 Flask Routes
+# ----------------------------
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/predict_image', methods=['POST'])
+def predict_image_route():
+    file = request.files['file']
+    if not file:
+        return "No file uploaded", 400
+    filename = secure_filename(file.filename)
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    file.save(filepath)
+    prediction = predict_image(filepath)
+    return render_template('index.html', image_result=prediction, image_path=filepath)
+
+@app.route('/predict_video', methods=['POST'])
+def predict_video_route():
+    file = request.files['file']
+    if not file:
+        return "No file uploaded", 400
+    filename = secure_filename(file.filename)
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    file.save(filepath)
+    prediction = predict_video(filepath)
+    return render_template('index.html', video_result=prediction, video_path=filepath)
+
+# ----------------------------
+# 🔸 Run App
+# ----------------------------
+if __name__ == '__main__':
+    app.run(debug=True)

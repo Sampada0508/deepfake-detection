@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Articles — TRUTHLENS</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/articles.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">TRUTHLENS <span>— DEEPVISION AI</span></div>
+    <nav class="nav">
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('detect') }}">Detection</a>
+      <a class="active" href="{{ url_for('articles') }}">Articles</a>
+      <a href="{{ url_for('visualization') }}">Visualization</a>
+    </nav>
+  </header>
+
+  <main class="articles-container">
+    <section class="featured-article">
+      <div class="featured-card">
+        <div class="text">
+          <h1>Unmasking Deepfakes with AI & Ethics</h1>
+          <p>Deepfake technology has advanced rapidly — how TRUTHLENS brings transparency to digital truth.</p>
+          <a href="{{ url_for('article_detail') }}" class="btn primary">Read Full Article</a>
+        </div>
+      </div>
+    </section>
+
+    <h2 class="case-title">More Insights</h2>
+    <section class="article-grid">
+      <article class="card">
+        <h3>Detecting Temporal Artifacts</h3>
+        <p>How subtle inconsistencies between frames help identify fake videos.</p>
+      </article>
+      <article class="card">
+        <h3>Data Preprocessing Pipeline</h3>
+        <p>Step-by-step transformation of raw video into model-ready datasets.</p>
+      </article>
+      <article class="card">
+        <h3>ResNet Architecture</h3>
+        <p>Why residual connections help the network detect manipulations better.</p>
+      </article>
+      <article class="card">
+        <h3>Evaluation Metrics</h3>
+        <p>Understanding model performance beyond a single accuracy number.</p>
+      </article>
+      <article class="card">
+        <h3>Explainable AI</h3>
+        <p>Visualizing CNN feature maps to interpret decisions.</p>
+      </article>
+      <article class="card">
+        <h3>Real-World Implications</h3>
+        <p>How AI authenticity tools empower digital media trust globally.</p>
+      </article>
+    </section>
+    <h2 class="case-title">Real-world case studies, research, and insights</h2>
+
+    <!-- 🌍 From Around the World Section -->
+<section class="external-section">
+  <div class="container">
+    <div class="section-header">
+         
+      <h2>From Around the World</h2>
+     
+      <p class="section-sub">Real-world case studies, research, and global insights on deepfakes.</p>
+    </div>
+
+    <div class="cards-grid external-grid">
+      <article class="ext-card">
+        <div class="card-top">
+          <span class="source">🌐 MIT Tech Review</span>
+          <span class="tag external">External</span>
+        </div>
+        <h3 class="ext-title">The Deepfake Threat: AI and the Future of Disinformation</h3>
+        <p class="ext-desc">How synthetic media is reshaping trust and what researchers are doing to respond.</p>
+        <a class="ext-link" href="https://www.technologyreview.com" target="_blank" rel="noopener">Read on MIT Tech Review →</a>
+      </article>
+
+      <article class="ext-card">
+        <div class="card-top">
+          <span class="source">🌐 The Verge</span>
+          <span class="tag external">External</span>
+        </div>
+        <h3 class="ext-title">How Facebook, Microsoft & researchers fight deepfakes</h3>
+        <p class="ext-desc">Overview of collaborative dataset and detection challenges in industry.</p>
+        <a class="ext-link" href="https://www.theverge.com" target="_blank" rel="noopener">Read on The Verge →</a>
+      </article>
+
+      <article class="ext-card">
+        <div class="card-top">
+          <span class="source">🌐 BBC</span>
+          <span class="tag external">Case Study</span>
+        </div>
+        <h3 class="ext-title">Deepfake scam that fooled a CEO</h3>
+        <p class="ext-desc">A real fraud case where audio/visual manipulation caused a costly scam.</p>
+        <a class="ext-link" href="https://www.bbc.com" target="_blank" rel="noopener">Read on BBC →</a>
+      </article>
+
+      <article class="ext-card">
+        <div class="card-top">
+          <span class="source">🌐 DARPA</span>
+          <span class="tag external">Research</span>
+        </div>
+        <h3 class="ext-title">DARPA Media Forensics (MediFor)</h3>
+        <p class="ext-desc">Government-backed initiative to detect and analyze media manipulation.</p>
+        <a class="ext-link" href="https://www.darpa.mil" target="_blank" rel="noopener">Read on DARPA →</a>
+      </article>
+    </div>
+
+   
+  </div>
+</section>
+  </main>
+
+  <footer class="footer">
+    <div>© TRUTHLENS — DeepVision AI • Built by Team TruthLens</div>
+  </footer>
+</body>
+</html>

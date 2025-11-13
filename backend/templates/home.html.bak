@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TRUTHLENS - DEEPVISION AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">TRUTHLENS <span>— DEEPVISION AI</span></div>
+    <nav class="nav">
+      <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+      <a class="nav-link" href="{{ url_for('detect') }}">Detection</a>
+      <a class="nav-link" href="/articles">Articles</a>
+      <a class="nav-link" href="/visualization">Visualization</a>
+    </nav>
+  </header>
+
+  <main class="hero-wrap">
+    <section class="hero">
+      <div class="hero-left">
+        <h1>TRUTHLENS</h1>
+        <h2>DEEPVISION AI</h2>
+        <p class="tag">
+          Detect digital forgeries in images and videos with AI precision <strong>AND DEEP LEARNING</strong>.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="{{ url_for('detect') }}">Go to Detection</a>
+          <a class="btn ghost" href="/articles">Read Articles</a>
+        </div>
+
+        <div class="feature-cards">
+          <div class="card small">
+            <div class="title">Image Detection</div>
+            <div class="desc">Frame-based CNN analysis for single-image authenticity.</div>
+          </div>
+          <div class="card small">
+            <div class="title">Video Detection</div>
+            <div class="desc">Temporal modelling and majority-vote aggregation for videos.</div>
+          </div>
+          <div class="card small">
+            <div class="title">Explainability</div>
+            <div class="desc">Per-frame confidence and aggregated explanations.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="panel">
+          <div class="panel-title">Project Overview</div>
+          <p class="muted">TRUTHLENS is an AI-driven deepfake detection platform that combines CNN image models with temporal video models to spot manipulated media.</p>
+          <ul class="meta-list">
+            <li><strong>Dataset:</strong> Real & Fake frames (preprocessed)</li>
+            <li><strong>Models:</strong> ResNet18 (image) + ResNet18 (frame-level video)</li>
+            <li><strong>Deployment:</strong> Flask web app (Image + Video)</li>
+          </ul>
+          <a class="btn outline" href="/visualization">View Visualizations</a>
+        </div>
+
+        <section class="team-contact-section">
+  <div class="panel team-contact">
+    <div class="panel-title">Team & Contact</div>
+
+    <div class="team-grid">
+  <div class="team-member">
+    <img src="{{ url_for('static', filename='img/sampada.jpeg') }}" alt="Sampada N. S.">
+    <p class="name">Sampada N. S.</p>
+  </div>
+
+  <div class="team-member">
+    <img src="{{ url_for('static', filename='img/samrudhi.jpeg') }}" alt="Samrudhi">
+    <p class="name">Samrudhi</p>
+  </div>
+
+  <div class="team-member">
+    <img src="{{ url_for('static', filename='img/sakshitha.jpeg') }}" alt="Sakshitha">
+    <p class="name">Sakshitha</p>
+  </div>
+
+  <div class="team-member">
+    <img src="{{ url_for('static', filename='img/suchanksh.jpeg') }}" alt="Suchanksh">
+    <p class="name">Suchanksh</p>
+  </div>
+</div>
+
+
+    <div class="contact-box">
+      <p>📧 <strong>Contact us:</strong> <a href="sampadanalur@gmail.com">sampadanalur@gmail.com</a></p>
+    </div>
+  </div>
+</section>
+      </div>
+    </section>
+    <hr style="margin:40px 0;border:0;border-top:1px solid rgba(255,255,255,0.1)">
+
+<section class="why-section">
+  <div class="why-container">
+    <h2 class="why-title">Why TRUTHLENS Matters</h2>
+    <p class="why-desc">
+      Deepfakes can manipulate public perception and damage trust. <strong>TRUTHLENS</strong> empowers digital safety by using AI and Deep Learning to reveal authenticity in real-time.
+    </p>
+
+    <div class="steps-grid">
+      <div class="step">
+        <h4>🧠 Step 1: Frame Extraction</h4>
+        <p>Frames are extracted and normalized for accurate feature learning.</p>
+      </div>
+      <div class="step">
+        <h4>📊 Step 2: Model Analysis</h4>
+        <p>Each frame is analyzed using trained CNNs to detect forgery indicators.</p>
+      </div>
+      <div class="step">
+        <h4>⚡ Step 3: Decision Aggregation</h4>
+        <p>Predictions are combined through temporal voting to classify videos.</p>
+      </div>
+    </div>
+
+    <a href="/visualization" class="btn primary" style="margin-top:30px;">View Detection Visualization</a>
+  </div>
+</section>
+
+
+    <section class="articles">
+      <h3>Latest Articles</h3>
+      <div class="articles-grid">
+        <article class="article">
+          <h4>Detecting Temporal Artifacts in Deepfakes</h4>
+          <p class="muted">How frame-level inconsistencies reveal manipulation patterns.</p>
+          <a class="link" href="/articles#temporal">Read →</a>
+        </article>
+        <article class="article">
+          <h4>Model Training & Dataset</h4>
+          <p class="muted">Overview of training pipeline and preprocessing choices.</p>
+          <a class="link" href="/articles#training">Read →</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>© TRUTHLENS — DeepVision AI • Built by Sampada N. S.</div>
+    <div class="footer-links">
+      <a href="https://github.com/sampada">GitHub</a> • <a href="https://linkedin.com">LinkedIn</a>
+    </div>
+  </footer>
+
+  <!-- chat bubble -->
+  <div id="chatBubble" class="chat-bubble" onclick="openChat()">💬</div>
+
+  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+</body>
+</html>

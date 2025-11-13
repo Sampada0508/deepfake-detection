@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chat — TRUTHLENS</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+</head>
+<body>
+  <!-- LARGER SITE HEADER -->
+  <header class="topbar" style="padding:22px 28px; border-bottom:1px solid rgba(255,255,255,0.04);">
+    <div class="brand" style="font-size:20px; font-weight:800; color:var(--neon);">
+      <a href="{{ url_for('home') }}" style="color:inherit; text-decoration:none;">TRUTHLENS</a>
+      <span style="font-weight:500; color:var(--muted); margin-left:8px; font-size:13px;">— DEEPVISION AI</span>
+    </div>
+
+    <nav class="nav" aria-label="Main navigation" style="display:flex; gap:18px; align-items:center;">
+      <a href="{{ url_for('home') }}" style="color:var(--muted); text-decoration:none; font-weight:600;">Home</a>
+      <a href="{{ url_for('detect') }}" style="color:var(--muted); text-decoration:none;">Detection</a>
+      <a href="{{ url_for('articles') }}" style="color:var(--muted); text-decoration:none;">Articles</a>
+      <a href="{{ url_for('visualization') }}" style="color:var(--muted); text-decoration:none;">Visualization</a>
+      <a class="active" href="{{ url_for('chat_page') }}" style="color:var(--neon); text-decoration:none; font-weight:700;">Chat</a>
+    </nav>
+  </header>
+
+  <!-- MAIN CHAT LAYOUT -->
+  <main class="chat-wrap" style="display:grid; grid-template-columns: 320px 1fr; gap:24px; max-width:1200px; margin:28px auto; padding:0 18px;">
+    <!-- LEFT SIDEBAR -->
+    <aside class="left-col" aria-label="Bot information" style="display:flex; flex-direction:column; gap:18px;">
+      <div class="bot-card" style="background:var(--panel); border-radius:12px; padding:16px; border:1px solid rgba(255,255,255,0.02);">
+        <div style="display:flex; gap:12px; align-items:center;">
+          <div class="bot-icon" style="width:62px; height:62px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:30px; background:linear-gradient(135deg,#7bfffd,#8a7bff);">
+            🤖
+          </div>
+          <div class="bot-meta">
+            <h3 id="botName" style="margin:0; font-size:18px; color:var(--neon);">LensBot</h3>
+            <p id="botSubtitle" style="margin:6px 0 0 0; color:var(--muted); font-size:13px;">TRUTHLENS assistant — ask about detection, usage, and more</p>
+          </div>
+        </div>
+      </div>
+<div class="welcome">
+  <h2>Welcome to TRUTHLENS</h2>
+
+  <p class="muted" id="welcomeText">
+    <p>    </p>
+    
+     <p>    </p>
+
+  <div class="quick-replies" id="quickReplies">
+    <button class="chip">How does detection work?</button>
+    <button class="chip">Show visualization</button>
+    <button class="chip">Interpret confidence</button>
+  </div>
+</div>
+
+      <div class="persona" style="background:var(--panel); padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.02);">
+        <label for="personaSelect" style="display:block; margin-bottom:6px; color:var(--muted); font-size:13px;">Style</label>
+        <select id="personaSelect" style="width:100%; padding:8px; border-radius:8px; background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--text);">
+          <option value="friendly" selected>Friendly</option>
+          <option value="technical">Technical</option>
+          <option value="concise">Concise</option>
+        </select>
+      </div>
+    </aside>
+
+    <!-- MAIN CHAT PANEL -->
+    <section class="main-col" style="display:flex; flex-direction:column; gap:12px; min-height:540px;">
+      <!-- Chat header inside panel (Rename/Clear/Home moved here) -->
+      <div class="chat-panel-header" style="display:flex; justify-content:space-between; align-items:center; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); padding:12px 16px; border-radius:12px; border:1px solid rgba(255,255,255,0.02);">
+        <div style="display:flex; gap:12px; align-items:center;">
+          <div style="width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#7bfffd,#8a7bff); font-size:20px;">🤖</div>
+          <div>
+            <div id="panelBotName" style="font-weight:800; color:var(--neon); font-size:16px;">LensBot</div>
+            <div style="font-size:12px; color:var(--muted);">Ask me about detection, model choices, or visualizations</div>
+          </div>
+        </div>
+
+        <div class="panel-actions" style="display:flex; gap:10px; align-items:center;">
+          <button id="renameBtn" class="btn small" style="padding:8px 10px; border-radius:8px;">Rename</button>
+          <button id="clearBtn" class="btn small" style="padding:8px 10px; border-radius:8px;">Clear</button>
+          <a href="{{ url_for('home') }}" class="btn small ghost" style="padding:8px 10px; border-radius:8px; text-decoration:none;">Home</a>
+        </div>
+      </div>
+
+      <!-- Messages area -->
+      <div id="messages" class="messages" role="log" aria-live="polite" style="flex:1; overflow:auto; padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); border:1px solid rgba(255,255,255,0.02);">
+        <!-- chat messages appended here by chatbot.js -->
+      </div>
+
+      <!-- Composer -->
+      <div class="composer" style="display:flex; gap:10px; align-items:center;">
+        <input id="msgInput" aria-label="Type your message" placeholder="Type a message or pick a quick reply..." autocomplete="off" style="flex:1; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--text);">
+        <button id="sendBtn" class="send" style="background:linear-gradient(90deg,#80f0ff,#7bf59f); border:none; padding:10px 16px; border-radius:12px; color:#042028; font-weight:700; cursor:pointer;">Send</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+</body>
+</html>

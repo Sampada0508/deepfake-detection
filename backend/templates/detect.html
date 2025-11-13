@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TRUTHLENS — Detection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/detect.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">TRUTHLENS <span>— DEEPVISION AI</span></div>
+    <nav class="nav">
+      <a href="{{ url_for('home') }}">Home</a>
+      <a class="active" href="{{ url_for('detect') }}">Detection</a>
+      <a href="/articles">Articles</a>
+      <a href="/visualization">Visualization</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title">Deepfake Detection</h1>
+    <p class="subtitle">Upload an image or a short video — our AI will analyze frames and return a confidence-backed decision.</p>
+
+    <!-- Feature cards -->
+    <section class="feature-row">
+      <div class="feature-card" id="selectImage" data-type="image">
+        <div class="icon">🖼️</div>
+        <div class="title">Photos</div>
+        <div class="hint">JPG · PNG · WEBP</div>
+      </div>
+
+      <div class="feature-card" id="selectVideo" data-type="video">
+        <div class="icon">🎞️</div>
+        <div class="title">Videos</div>
+        <div class="hint">MP4 · AVI · MOV</div>
+      </div>
+    </section>
+
+    <!-- Upload zone -->
+    <section class="upload-block">
+      <div class="upload-left">
+        <div id="dropzone" class="dropzone">
+          <input id="fileInput" type="file" hidden accept="image/*,video/*">
+          <div class="drop-inner">
+            <div class="arrow">⤴</div>
+            <div class="drop-text">Drop a file here or click to browse</div>
+            <div class="small muted">Selected: <span id="selectedTypeText">Photos</span></div>
+          </div>
+        </div>
+
+        <div class="tips" id="tips">
+          <strong>Tips</strong>
+          <ul>
+            <li>For videos use short clips (≤ 30s) for faster results.</li>
+            <li>Good lighting and frontal faces improve detection accuracy.</li>
+            <li>Images should be at least 200×200 px.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="upload-right">
+        <div class="preview-wrapper">
+          <div id="previewBox" class="preview-box">
+            <div id="previewPlaceholder" class="preview-placeholder">
+              <div class="ready">No file uploaded</div>
+              <div class="muted">Upload a photo or video to analyze</div>
+            </div>
+
+            <div id="previewMedia" class="preview-media" style="display:none;"></div>
+          </div>
+
+          <div id="resultArea" class="result-area" style="display:none;">
+            <div id="resultBadge" class="badge">—</div>
+            <div id="resultConfidence" class="confidence">—</div>
+            <div id="resultNote" class="muted">Model confidence (aggregated across frames).</div>
+          </div>
+
+          <div id="loader" class="loader" style="display:none;">
+            <div class="spinner"></div>
+            <div class="loader-text">Analyzing... please wait</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Last uploads box -->
+    <section class="last-uploads" id="lastUploadsSection">
+      <h3>Last uploads</h3>
+      <div id="lastUploadsList" class="uploads-list">
+        <!-- JS will insert recent uploads here -->
+        <div class="empty">No uploads yet</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="chat-fab" onclick="toggleChat()">💬</div>
+
+  <script src="{{ url_for('static', filename='js/detect.js') }}"></script>
+</body>
+</html>

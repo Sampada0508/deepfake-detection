@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Deepfake Detection — Full Article</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/articles.css') }}">
+
+<!-- Scroll Animation Library -->
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+
+<style>
+/* ---- PAGE LAYOUT ---- */
+.page {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+}
+
+/* ---- HEADER ---- */
+h1 {
+  font-size: 38px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #00e0ff, #6be9a6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  margin-top: 45px;
+  margin-bottom: 12px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #7df9ff;
+}
+
+/* ---- NEON DIVIDERS ---- */
+.divider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #00f0ff55, #6be9a6aa, #00f0ff55);
+  margin: 25px 0;
+  box-shadow: 0 0 20px #00e0ff88;
+  border-radius: 20px;
+}
+
+/* ---- PARAGRAPH ---- */
+p {
+  margin: 12px 0;
+  color: rgba(255,255,255,0.75);
+  font-size: 16px;
+}
+
+/* ---- PDF DOWNLOAD BUTTON ---- */
+.pdf-btn {
+  display: inline-block;
+  margin: 20px 0;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00e0ff, #6be9a6);
+  color: #000;
+  text-decoration: none;
+  box-shadow: 0 0 20px #00e0ff80;
+  transition: 0.2s ease;
+}
+.pdf-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 30px #00e0ffcc;
+}
+
+/* ---- BACK BUTTON ---- */
+.back-btn {
+  display: inline-block;
+  margin-top: 40px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #6be9a6, #00e0ff);
+  color: #000;
+  text-decoration: none;
+  font-weight: 700;
+}
+.back-btn:hover {
+  opacity: 0.85;
+}
+
+/* ---- ANIMATED GRAPHIC BARS ---- */
+.info-box {
+  padding: 20px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  margin-top: 15px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.15);
+}
+
+/* ---- LIST ---- */
+ul li {
+  margin-bottom: 6px;
+}
+
+/* ---- PRINT FRIENDLY PDF FIX ---- */
+@media print {
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .page {
+    color: #000 !important;
+  }
+
+  h1, h2, h3, p, li, ul {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+  }
+
+  /* Remove gradients & neon for print */
+  h1, h2 {
+    background: none !important;
+    text-shadow: none !important;
+  }
+
+  .divider {
+    background: #000 !important;
+    box-shadow: none !important;
+  }
+
+  /* Remove animations */
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  /* Hide navigation bar */
+  .topbar {
+    display: none !important;
+  }
+
+  /* Hide back button and PDF button */
+  .pdf-btn, .back-btn {
+    display: none !important;
+  }
+
+  /* Make page full width */
+  .page {
+    max-width: 100% !important;
+    padding: 20px !important;
+  }
+
+}
+</style>
+
+</head>
+
+<body>
+<header class="topbar">
+    <div class="brand">TRUTHLENS <span>— DEEPVISION AI</span></div>
+    <nav class="nav">
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('detect') }}">Detection</a>
+      <a class="active" href="{{ url_for('articles') }}">Articles</a>
+      <a href="{{ url_for('visualization') }}">Visualization</a>
+    </nav>
+</header>
+
+<div class="page">
+
+<h1 data-aos="fade-up">The Complete Deepfake Detection System — TRUTHLENS</h1>
+
+<a class="pdf-btn" href="#" onclick="window.print()">⬇ Download as PDF</a>
+
+<p data-aos="fade-up">
+Deepfake technology has evolved into one of the most significant challenges in digital security, 
+misinformation control, and media authenticity. TRUTHLENS is designed as a full-stack deepfake 
+detection ecosystem combining machine learning, web deployment, and explainability.
+</p>
+
+<div class="divider"></div>
+
+<!-- INTRO -->
+<h2 class="section-title" data-aos="fade-right">1. Introduction</h2>
+<p data-aos="fade-up">
+Deepfakes use neural networks such as Autoencoders and GANs to generate manipulated images and videos 
+that appear real. Their misuse ranges from misinformation, political manipulation, financial scams, 
+and identity impersonation. Therefore, a reliable AI-powered detection pipeline is critical.
+</p>
+
+<div class="divider"></div>
+
+<!-- EXISTING SYSTEM -->
+<h2 class="section-title" data-aos="fade-left">2. Existing System</h2>
+<div class="info-box" data-aos="zoom-in">
+<ul>
+  <li>❌ Manual inspection is highly inaccurate</li>
+  <li>❌ Traditional forensics fail on modern GAN-based deepfakes</li>
+  <li>❌ No unified system for image + video detection</li>
+  <li>❌ No confidence scoring or explainability</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- PROPOSED SYSTEM -->
+<h2 class="section-title" data-aos="fade-right">3. Proposed System — TRUTHLENS</h2>
+<p data-aos="fade-up">
+TRUTHLENS introduces an AI-powered system integrating:
+</p>
+<div class="info-box" data-aos="zoom-in">
+<ul>
+  <li>✔ CNN-based Image Model (ResNet18)</li>
+  <li>✔ Frame-based Video Analysis</li>
+  <li>✔ Temporal Voting Aggregation</li>
+  <li>✔ Real-time Prediction</li>
+  <li>✔ Detailed Confidence Score</li>
+  <li>✔ Interactive Web Application</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- METHODOLOGY -->
+<h2 class="section-title" data-aos="fade-left">4. Methodology</h2>
+<p data-aos="fade-up">
+The system processes uploaded media (image/video), applies model inference, and then outputs 
+class prediction with confidence.
+</p>
+
+<h3 style="color:#00e0ff" data-aos="fade-up">4.1 Dataset Preparation</h3>
+<ul data-aos="fade-up">
+  <li>~90,000 total frames</li>
+  <li>Filtered corrupted/short-length videos</li>
+  <li>Train/Val/Test split maintained</li>
+</ul>
+
+<h3 style="color:#00e0ff" data-aos="fade-up">4.2 Image Classification (CNN)</h3>
+<p data-aos="fade-up">
+ResNet18 extracts deep spatial features such as texture inconsistencies, blending artifacts, 
+and unnatural facial distortions.
+</p>
+
+<h3 style="color:#00e0ff" data-aos="fade-up">4.3 Video Classification</h3>
+<p data-aos="fade-up">
+Videos are sampled for 30 frames → each frame classified → average probability determines the final label.
+</p>
+
+<div class="divider"></div>
+
+<!-- IMPLEMENTATION -->
+<h2 class="section-title" data-aos="fade-right">5. Implementation</h2>
+
+<div class="info-box" data-aos="fade-up">
+<h3 style="color:#00e0ff">Frontend (Flask + HTML/CSS/JS)</h3>
+<ul>
+  <li>Modern neon UI</li>
+  <li>Animated upload system</li>
+  <li>Interactive confidence display</li>
+  <li>Live preview of media</li>
+</ul>
+
+<h3 style="color:#00e0ff">Backend (Python + Flask)</h3>
+<ul>
+  <li>REST API endpoints for image & video detection</li>
+  <li>Model loading on device (MPS/CPU)</li>
+</ul>
+
+<h3 style="color:#00e0ff">Modeling (PyTorch)</h3>
+<ul>
+  <li>ResNet18 for image-level detection</li>
+  <li>Frame sampling for video inference</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- RESULTS -->
+<h2 class="section-title" data-aos="fade-left">6. Results & Evaluation</h2>
+<div class="info-box" data-aos="zoom-in">
+<ul>
+  <li>📌 Image Model Accuracy: ~88%</li>
+  <li>📌 Video Model Accuracy: ~84%</li>
+  <li>📌 Strong detection performance on unseen deepfakes</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- FUTURE ENHANCEMENTS -->
+<h2 class="section-title" data-aos="fade-right">7. Future Enhancements</h2>
+<div class="info-box" data-aos="fade-up">
+<ul>
+  <li>🔹 Live webcam deepfake detection</li>
+  <li>🔹 Heatmap-based explainability using Grad-CAM</li>
+  <li>🔹 Transformer-based video deepfake model</li>
+  <li>🔹 Mobile app deployment</li>
+  <li>🔹 Real-time streaming analysis</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONCLUSION -->
+<h2 class="section-title" data-aos="fade-left">8. Conclusion</h2>
+<p data-aos="fade-up">
+TRUTHLENS successfully demonstrates a functional deepfake detection pipeline combining data 
+preprocessing, CNN-based image/video analysis, and deployment using Flask. Its intuitive interface, 
+high accuracy, and hybrid methods make it suitable for research, academic projects, and real-world 
+applications.
+</p>
+
+<a href="{{ url_for('articles') }}" class="back-btn">← Back to Articles</a>
+
+</div>
+
+<!-- AOS ANIMATION SCRIPT -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DeepGuard AI — Detection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="nav">
+    <div class="brand">DeepGuard AI</div>
+    <nav>
+      <a href="/">Home</a>
+      <a class="active" href="/detection">Detection</a>
+      <a href="/models">AI Models</a>
+      <a href="/articles">Articles</a>
+      <a href="/dashboard">Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-left">
+        <h1>Deepfake Detection</h1>
+        <p>Upload an image or a video — our models analyze frames and provide a confident real / fake prediction.</p>
+        <div class="kpis">
+          <div class="kpi"><strong>Real-time</strong><span>Analysis</span></div>
+          <div class="kpi"><strong>Image + Video</strong><span>Single app</span></div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="card upload-card">
+          <h3>Upload Media</h3>
+
+          <!-- IMAGE upload form -->
+          <form id="image-form" action="{{ url_for('predict_image_route') }}" method="post" enctype="multipart/form-data">
+            <label class="upload-box">
+              <input id="image-file" name="file" type="file" accept="image/*" required>
+              <div class="upload-info">
+                <div class="big">Images</div>
+                <small>JPG, PNG, WEBP</small>
+              </div>
+            </label>
+            <button type="submit" class="btn">Analyze Image</button>
+          </form>
+
+          <hr/>
+
+          <!-- VIDEO upload form -->
+          <form id="video-form" action="{{ url_for('predict_video_route') }}" method="post" enctype="multipart/form-data">
+            <label class="upload-box">
+              <input id="video-file" name="file" type="file" accept="video/*" required>
+              <div class="upload-info">
+                <div class="big">Videos</div>
+                <small>MP4, MOV, AVI</small>
+              </div>
+            </label>
+            <button type="submit" class="btn">Analyze Video</button>
+          </form>
+        </div>
+
+        <div class="card result-card" id="resultCard">
+          <h3>Analysis Results</h3>
+
+          {% if image_result %}
+          <div class="result-row">
+            <div class="preview">
+              <img src="{{ url_for('static', filename=image_path.split('static/')[1]) }}" alt="uploaded image">
+            </div>
+            <div class="result">
+              <div class="label">Image prediction</div>
+              <div class="value {{ 'real' if image_result=='real' else 'fake' }}">{{ image_result|upper }}</div>
+            </div>
+          </div>
+          {% endif %}
+
+          {% if video_result %}
+          <div class="result-row">
+            <div class="preview">
+              <video controls src="{{ url_for('static', filename=video_path.split('static/')[1]) }}"></video>
+            </div>
+            <div class="result">
+              <div class="label">Video prediction</div>
+              <div class="value {{ 'real' if video_result=='real' else 'fake' }}">{{ video_result|upper }}</div>
+            </div>
+          </div>
+          {% endif %}
+
+          {% if not image_result and not video_result %}
+            <div class="empty">Ready for analysis — upload an image or a video.</div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>© DeepGuard AI</div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
