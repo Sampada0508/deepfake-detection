@@ -497,6 +497,10 @@ def api_chat():
 # ===============================================================
 # Run app
 # ===============================================================
+# at bottom of backend/app.py — replace existing run block with this:
 if __name__ == "__main__":
-    # Run from repository root as: python backend/app.py
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    host = "0.0.0.0"
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1"
+    app.run(host=host, port=port, debug=debug)
