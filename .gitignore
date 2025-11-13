@@ -17,3 +17,12 @@ models/
 .DS_Store
 .vscode/
 .idea/
+# data and models
+data/
+models/
+*.pt
+*.pth
+*.tar.gz
+*.zip
+repo-backup.bundle
+Miniforge3-MacOSX-arm64.sh

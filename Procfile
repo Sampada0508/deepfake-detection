@@ -1,1 +1,1 @@
-web: gunicorn backend.app:app --bind 0.0.0.0:$PORT --workers 4
+web: gunicorn -w 4 -b 0.0.0.0:$PORT backend.app:app
