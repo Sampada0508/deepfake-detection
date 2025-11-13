@@ -18,6 +18,7 @@ filelock==3.19.1
 Flask==3.1.2
 frozendict @ file:///Users/runner/miniforge3/conda-bld/frozendict_1728841362247/work
 fsspec==2025.9.0
+gunicorn==23.0.0
 h2 @ file:///home/conda/feedstock_root/build_artifacts/h2_1738578511449/work
 hpack @ file:///home/conda/feedstock_root/build_artifacts/hpack_1737618293087/work
 hyperframe @ file:///home/conda/feedstock_root/build_artifacts/hyperframe_1737618333194/work
